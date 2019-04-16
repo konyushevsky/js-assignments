@@ -33,7 +33,7 @@ function parseDataFromRfc2822(value) {
  * @return {date}
  *
  * @example :
- *    '2016-01-19T16:07:37+00:00'    => Date()
+ *    '2016-01-19T16:07:37+00:00' => Date()
  *    '2016-01-19T08:07:37Z' => Date()
  */
 function parseDataFromIso8601(value) {
@@ -77,8 +77,8 @@ function isLeapYear(date) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
 function timeSpanToString(startDate, endDate) {
-   return new Date(startDate) - new Date(endDate);
-
+  let diff =  new Date(endDate - startDate);
+  return diff.toISOString().slice(diff.toISOString().indexOf('T') + 1, diff.toISOString().length - 1);
 }
 
 
@@ -96,7 +96,14 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-    throw new Error('Not implemented');
+  let hours = new Date(date).getUTCHours();
+  let americanFormathours = hours <= 12 ? hours : hours  - 12;
+  let minutes = new Date(date).getUTCMinutes();
+  let angleHours = 0.5 * (60 * americanFormathours + minutes);
+  let angleMinute = 6 * minutes;
+  let diff = Math.abs(angleHours - angleMinute);
+  let deg = diff > 180 ? Math.abs(diff - 360) : diff;
+  return Math.PI * deg / 180;
 }
 
 
