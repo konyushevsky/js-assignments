@@ -103,7 +103,7 @@ function angleBetweenClockHands(date) {
   let angleMinute = 6 * minutes;
   let diff = Math.abs(angleHours - angleMinute);
   let deg = diff > 180 ? Math.abs(diff - 360) : diff;
-  return Math.PI * deg / 180;
+  return String(Math.PI * deg / 180);
 }
 
 
